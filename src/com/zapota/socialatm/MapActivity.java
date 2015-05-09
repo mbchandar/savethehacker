@@ -1,52 +1,63 @@
 package com.zapota.socialatm;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import se.walkercrou.places.GooglePlaces;
-import se.walkercrou.places.Place;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.a2plab.googleplaces.GooglePlaces;
+import com.a2plab.googleplaces.models.Place;
+import com.a2plab.googleplaces.result.PlacesResult;
+import com.a2plab.googleplaces.result.Result.StatusCode;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapActivity extends FragmentActivity implements
 		GoogleApiClient.ConnectionCallbacks,
 		GoogleApiClient.OnConnectionFailedListener,
-		LocationListener {
+		LocationListener, OnCameraChangeListener, OnMapReadyCallback, OnMarkerClickListener {
 
 	private SupportMapFragment mapFragment;
-	private GoogleMap map;
+	GoogleMap map;
 	private GoogleApiClient mGoogleApiClient;
 	private LocationRequest mLocationRequest;
 	private long UPDATE_INTERVAL = 600000;  /* 10 mins */
 	private long FASTEST_INTERVAL = 50000; /* 50 secs */
 	
-	ProgressBar progressBar;
+	private ProgressBar progressBar;
+	
+	private LatLng center;
 
+	private GooglePlaces client;
 	/*
 	 * Define a request code to send to Google Play services This code is
 	 * returned in Activity.onActivityResult
@@ -58,50 +69,27 @@ public class MapActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
 
+		client = new GooglePlaces("AIzaSyArL2I3jVkYCTpJNtZ_zR6Buph-H5Ule6M");
 		//StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         //StrictMode.setThreadPolicy(policy);
 		
 		progressBar = (ProgressBar) findViewById(R.id.progressBar1);
-		progressBar.setVisibility(ProgressBar.INVISIBLE);
+		
 		
 		mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
 		if (mapFragment != null) {
-			mapFragment.getMapAsync(new OnMapReadyCallback() {
-                @Override
-                public void onMapReady(GoogleMap map) {
-                    loadMap(map);
-                }
-            });
+			mapFragment.getMapAsync(this);					
 		} else {
 			Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
 		}
 
 	}
-
-    protected void loadMap(GoogleMap googleMap) {
-        map = googleMap;
-        if (map != null) {
-            // Map is ready
-            Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
-            map.setMyLocationEnabled(true);
-
-            // Now that map has loaded, let's get our location!
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addApi(LocationServices.API)                    
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this).build();
-                       
-            connectClient();
-        } else {
-            Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
-        }
-    }
-    
-    
+ 
 
     private void loadPlaces(LatLng latLng) {
     	if (latLng != null){
+    		map.clear();
     		new PlacesLoadTask().execute(latLng);
     	}    	
 	}
@@ -115,26 +103,55 @@ public class MapActivity extends FragmentActivity implements
          }
 
          protected List<Place> doInBackground(LatLng... latLng) {
-        	 GooglePlaces client = new GooglePlaces("AIzaSyArL2I3jVkYCTpJNtZ_zR6Buph-H5Ule6M");
-     		
-     		List<Place> places = client.getNearbyPlaces(latLng[0].latitude, latLng[0].longitude, 1000, 10);
-     		
-     		return places;
+        	 
+        	Log.d("[PLACESLOADTASK]", latLng[0].toString());   
+        	
+        		//List<Place> places = client.getPlacesByRadar(latLng[0].latitude, latLng[0].longitude, 1000, 40, Param.name("types").value("atm"));
+        	List<String> types = new ArrayList<String>();
+        	types.add("atm");
+        	
+        		//PlacesResult places = client.getNearbyPlaces(types, 5000,latLng[0].latitude , latLng[0].longitude);
+        	
+        		PlacesResult result;
+				try {
+					
+					
+					
+					result = (PlacesResult) client.getNearbyPlaces(types, 2000, latLng[0].latitude, latLng[0].longitude);
+					if (result.getStatusCode() == StatusCode.OK) {
+					    List<Place> placesList = (List<Place>) result.getResults();
+					    return placesList;
+					}else{
+						return null;
+					}					
+		        	 
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
+        		
+        		
+					     		
          }         
 
-         protected void onPostExecute(List<Place> places) {
-        	 for (Place place : places) {
-      			LatLng tempLocation = new LatLng(place.getLatitude(), place.getLongitude());
-      		    map.addMarker(new MarkerOptions().position(tempLocation).title(place.getVicinity()));
-      		}
+         protected void onPostExecute(List<Place> placesList) {
+        	
+        	 if (placesList != null) {
+        		 for (Place place : placesList) {
+        			 mapFragment.getMap()
+        	            .addMarker(new MarkerOptions()
+        	                .position(new LatLng(place.getGeometry().location.lat, place.getGeometry().location.lng))
+        	                .title(place.getName())
+        	                .snippet(place.getFormattedAddress())
+        	            .icon(BitmapDescriptorFactory.defaultMarker()));
+				}
+        		
+        	 }
              // Hide the progress bar
-             progressBar.setVisibility(ProgressBar.INVISIBLE);
+             progressBar.setVisibility(ProgressBar.INVISIBLE);                          
          }
  
-    }
-    
-    private GoogleMap getMap(){
-    	return mapFragment.getMap();
     }
 
 	protected void connectClient() {
@@ -225,9 +242,8 @@ public class MapActivity extends FragmentActivity implements
 			LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
 			map.animateCamera(cameraUpdate);
-            startLocationUpdates();
-            
-            loadPlaces(latLng);
+            startLocationUpdates();            
+            map.setOnCameraChangeListener(this);             
         } else {
 			Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
 		}
@@ -240,6 +256,7 @@ public class MapActivity extends FragmentActivity implements
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
                 mLocationRequest, this);
+                
     }
 
     public void onLocationChanged(Location location) {
@@ -249,9 +266,11 @@ public class MapActivity extends FragmentActivity implements
                 Double.toString(location.getLongitude());
         
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        
         loadPlaces(latLng);
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
+        //map.setOnCameraChangeListener(this);
     }
 
     /*
@@ -318,6 +337,49 @@ public class MapActivity extends FragmentActivity implements
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			return mDialog;
 		}
+	}
+
+	@Override
+	public void onCameraChange(CameraPosition position) {
+		  center = map.getCameraPosition().target;   		  		  		           
+          Log.d("[MAP]", center.toString());         
+          try {
+        	
+          	loadPlaces(center);
+          } catch (Exception e) {
+          	
+          }
+	}
+
+	@Override
+	public void onMapReady(GoogleMap googleMap) {
+		 	map = googleMap;
+	        if (map != null) {
+	            // Map is ready
+	           // Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+	            map.setMyLocationEnabled(true);            
+	            
+	            // Now that map has loaded, let's get our location!
+	            mGoogleApiClient = new GoogleApiClient.Builder(this)
+	                    .addApi(LocationServices.API)
+	                    .addApi(Places.GEO_DATA_API)
+	                    .addApi(Places.PLACE_DETECTION_API)
+	                    .addConnectionCallbacks(this)
+	                    .addOnConnectionFailedListener(this).build();
+	                       
+	            connectClient();
+	                      
+	        } else {
+	            Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
+	        }
+	}
+
+
+	@Override
+	public boolean onMarkerClick(Marker marker) {
+		Log.e("TESTING", "on Marker click: " + marker.getTitle());
+		marker.showInfoWindow();
+		return false;
 	}
 
 }
