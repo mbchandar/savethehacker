@@ -139,11 +139,9 @@ public class MapActivity extends FragmentActivity implements
          protected void onPostExecute(List<Place> placesList) {
         	
         	 if (placesList != null) {
-        		 for (Place place : placesList) {
-        			         	         
-        	         IconGenerator iconFactory = new IconGenerator(getApplicationContext());
-        	         addIcon(iconFactory, place.getName(), new LatLng(place.getGeometry().location.lat, place.getGeometry().location.lng));
-
+        		 for (Place place : placesList) {        			         	         
+        	         IconGenerator iconFactory = new IconGenerator(getApplicationContext());        	         
+        	         addIcon(iconFactory, place.getName(), new LatLng(place.getGeometry().location.lat, place.getGeometry().location.lng), place);        	        
 				}
         		
         	 }
@@ -153,10 +151,10 @@ public class MapActivity extends FragmentActivity implements
  
     }
     
-    private void addIcon(IconGenerator iconFactory, String text, LatLng position) {
-        MarkerOptions markerOptions = new MarkerOptions().
+    private void addIcon(IconGenerator iconFactory, String text, LatLng position, Place place) {
+        MarkerOptions markerOptions = new MarkerOptions().title(text).
                 icon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon(text))).
-                position(position).
+                position(position).snippet(place.getFormattedAddress()).
                 anchor(iconFactory.getAnchorU(), iconFactory.getAnchorV());
 
         map.addMarker(markerOptions);
