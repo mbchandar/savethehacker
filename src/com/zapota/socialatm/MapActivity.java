@@ -40,6 +40,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.ui.IconGenerator;
 
 public class MapActivity extends FragmentActivity implements
 		GoogleApiClient.ConnectionCallbacks,
@@ -139,12 +140,10 @@ public class MapActivity extends FragmentActivity implements
         	
         	 if (placesList != null) {
         		 for (Place place : placesList) {
-        			 mapFragment.getMap()
-        	            .addMarker(new MarkerOptions()
-        	                .position(new LatLng(place.getGeometry().location.lat, place.getGeometry().location.lng))
-        	                .title(place.getName())
-        	                .snippet(place.getFormattedAddress())
-        	            .icon(BitmapDescriptorFactory.defaultMarker()));
+        			         	         
+        	         IconGenerator iconFactory = new IconGenerator(getApplicationContext());
+        	         addIcon(iconFactory, place.getName(), new LatLng(place.getGeometry().location.lat, place.getGeometry().location.lng));
+
 				}
         		
         	 }
@@ -152,6 +151,15 @@ public class MapActivity extends FragmentActivity implements
              progressBar.setVisibility(ProgressBar.INVISIBLE);                          
          }
  
+    }
+    
+    private void addIcon(IconGenerator iconFactory, String text, LatLng position) {
+        MarkerOptions markerOptions = new MarkerOptions().
+                icon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon(text))).
+                position(position).
+                anchor(iconFactory.getAnchorU(), iconFactory.getAnchorV());
+
+        map.addMarker(markerOptions);
     }
 
 	protected void connectClient() {
@@ -243,7 +251,9 @@ public class MapActivity extends FragmentActivity implements
 			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
 			map.animateCamera(cameraUpdate);
             startLocationUpdates();            
-            map.setOnCameraChangeListener(this);             
+            
+            map.setOnCameraChangeListener(this);
+            map.setOnMarkerClickListener(this);
         } else {
 			Toast.makeText(this, "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
 		}
@@ -379,7 +389,7 @@ public class MapActivity extends FragmentActivity implements
 	public boolean onMarkerClick(Marker marker) {
 		Log.e("TESTING", "on Marker click: " + marker.getTitle());
 		marker.showInfoWindow();
-		return false;
+		return true;
 	}
 
 }
