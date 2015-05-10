@@ -151,10 +151,10 @@ public class MapActivity extends FragmentActivity implements
  
     }
     
-    private void addIcon(IconGenerator iconFactory, String text, LatLng position, Place place) {
+    private void addIcon(IconGenerator iconFactory, String text, LatLng position, Place place) {    	
         MarkerOptions markerOptions = new MarkerOptions().title(text).
                 icon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon(text))).
-                position(position).snippet(place.getFormattedAddress()).
+                position(position).snippet(place.getReference()).
                 anchor(iconFactory.getAnchorU(), iconFactory.getAnchorV());
 
         map.addMarker(markerOptions);
@@ -386,7 +386,11 @@ public class MapActivity extends FragmentActivity implements
 	@Override
 	public boolean onMarkerClick(Marker marker) {
 		Log.e("TESTING", "on Marker click: " + marker.getTitle());
-		marker.showInfoWindow();
+				
+		// Start your app main activity
+        Intent i = new Intent(MapActivity.this, BankdetailsActivity.class);
+        i.putExtra("placeReference", marker.getSnippet());
+        startActivity(i);				
 		return true;
 	}
 

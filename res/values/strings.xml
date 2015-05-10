@@ -5,8 +5,54 @@
     <string name="title_activity_splash">SplashActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_map">MapActivity</string>
-    <string name="title_activity_review">ReviewActivity</string>
-    <string name="title_activity_usage">UsageActivity</string>
+    <string name="title_activity_map">Social ATM</string>
+    <string name="title_activity_review">Social ATM</string>
+    <string name="title_activity_usage">ATM Usage</string>
 
+    <string-array name="list_banks">        
+        <item>American Express Bank Ltd.</item>
+		<item>Allahabad Bank</item>
+		<item>Andhra Bank</item>
+		<item>Axis Bank</item>
+		<item>Bank of Baroda</item>
+		<item>Bank of India</item>
+		<item>Bank of Maharashtra</item>
+		<item>Canara Bank</item>
+		<item>Central Bank of India</item>
+		<item>Citibank N.A.</item>
+		<item>City Union Bank Ltd.</item>
+		<item>Corporation Bank</item>
+		<item>Deutsche Bank AG</item>
+		<item>Development Credit Bank Ltd.</item>
+		<item>Dena Bank</item>
+		<item>IndusInd Bank Limited</item>
+		<item>ICICI Bank</item>
+		<item>IDBI Bank Limited</item>
+		<item>Indian Bank</item>
+		<item>Indian Overseas Bank</item>
+		<item>ING Vysya Bank</item>
+		<item>Kotak Mahindra Bank Limited</item>
+		<item>Karnataka Bank</item>
+		<item>Karur Vysya Bank Limited.</item>
+		<item>Oriental Bank of Commerce</item>
+		<item>Punjab and Sind Bank</item>
+		<item>Punjab National Bank</item>
+		<item>Standard Chartered Bank</item>
+		<item>State Bank of Mauritius Ltd.</item>
+		<item>State Bank of Bikaner and Jaipur</item>
+		<item>State Bank of Hyderabad</item>
+		<item>State Bank of India</item>
+		<item>State Bank of Mysore</item>
+		<item>State Bank of Patiala</item>
+		<item>State Bank of Travancore</item>
+		<item>Syndicate Bank</item>
+		<item>The Federal Bank Ltd.</item>
+		<item>The HDFC Bank Ltd.</item>
+		<item>UCO Bank</item>
+		<item>Union Bank of India</item>
+		<item>United Bank Of India</item>
+		<item>Vijaya Bank</item>
+		<item>Yes Bank</item>
+      
+    </string-array>
 </resources>

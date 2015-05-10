@@ -8,24 +8,30 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.zapota.socialatm.BankActivity" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="149dp"
-        android:text="No Banks were Added Till now"
-        android:textSize="20dp" />
+    <Spinner
+          android:id="@+id/selectBanks"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/listBanks"
+          android:entries="@array/list_banks" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btnAddBank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
+       android:layout_below="@+id/selectBanks"
         android:text="Add Bank"
         android:textSize="25dp" />
+       
+    <ListView
+        android:id="@+id/listBanks"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/btnAddBank"
+        android:layout_height="wrap_content"
+        android:divider="@color/list_divider"
+        android:dividerHeight="1dp"
+        android:listSelector="@drawable/list_row_selector" />
+
+  
 
 </RelativeLayout>

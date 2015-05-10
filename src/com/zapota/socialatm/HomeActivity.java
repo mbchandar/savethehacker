@@ -16,7 +16,7 @@ public class HomeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		
-		Button btnNearest = (Button) findViewById(R.id.btn_nearest);
+		Button btnNearest = (Button) findViewById(R.id.btn_nearest2);
 		Button btnMybank = (Button) findViewById(R.id.btn_mybank);
 		Button btnUsage = (Button) findViewById(R.id.btn_usage);
 		
