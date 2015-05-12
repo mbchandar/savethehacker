@@ -1,49 +1,90 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"   
+    android:layout_height="match_parent"
     tools:context="com.zapota.socialatm.MapActivity" >
 
     <ProgressBar
-            android:id="@+id/progressBar1"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible" />
-     
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
 
-        
-        <fragment
-        android:id="@+id/map"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"        
-        class="com.google.android.gms.maps.SupportMapFragment" />
-         
+    <TabHost
+        android:id="@android:id/tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical" >
+
         <LinearLayout
-            android:id="@+id/locationMarker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="30dp"
-            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical" >
-            
-			    <ImageView
-			        android:id="@+id/imageView1"
-			        android:layout_width="64dp"
-			        android:layout_height="64dp"
-			        android:layout_alignBottom="@+id/progressBar1"
-			        android:layout_centerHorizontal="true"
-			        android:layout_marginBottom="29dp"
-			        android:scaleType="center"
-			        android:src="@drawable/ic_myloc" />
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" >
+            </TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <LinearLayout
+                    android:id="@+id/tab1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <fragment
+                            android:id="@+id/map"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            class="com.google.android.gms.maps.SupportMapFragment" />
+
+                        <LinearLayout
+                            android:id="@+id/locationMarker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="30dp"
+                            android:gravity="center"
+                            android:orientation="vertical" >
+
+                            <ImageView
+                                android:id="@+id/imageView1"
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                android:layout_alignBottom="@+id/progressBar1"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="29dp"
+                                android:scaleType="center"
+                                android:src="@drawable/ic_myloc" />
+                        </LinearLayout>
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tab2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" 
+                    android:orientation="vertical">
+                </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
 
-       
+    </TabHost>
 
-    </FrameLayout>
-     
 </RelativeLayout>
