@@ -1,4 +1,4 @@
-package com.zapota.socialatm;
+package com.zapota.socialatm.activity;
 
 import com.zapota.socialatm.R;
 import com.zapota.socialatm.R.id;
@@ -6,16 +6,31 @@ import com.zapota.socialatm.R.layout;
 import com.zapota.socialatm.R.menu;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 
-public class BanknameActivity extends Activity {
+public class ThanksActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_bankname);
+		setContentView(R.layout.activity_thanks);
+		
+		ImageButton btnHome = (ImageButton) findViewById(R.id.btnHome);
+		
+		btnHome.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(ThanksActivity.this,MapActivity.class);
+				startActivity(i);
+			}
+		});
 	}
 
 	@Override

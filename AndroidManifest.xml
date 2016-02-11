@@ -51,19 +51,19 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".activity.HomeActivity"
             android:label="@string/title_activity_map" >
         </activity>
         <activity
-            android:name=".MapActivity"
+            android:name=".activity.MapActivity"
             android:label="@string/title_activity_map" >
         </activity>
         <activity
-            android:name=".ReviewActivity"
+            android:name=".activity.ReviewActivity"
             android:label="@string/title_activity_review" >
         </activity>
         <activity
-            android:name=".SplashActivity"
+            android:name=".activity.SplashActivity"
             android:label="@string/title_activity_review" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,23 +72,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BankActivity"
+            android:name=".activity.BankActivity"
             android:label="@string/title_activity_review" >
         </activity>
         <activity
-            android:name=".BanknameActivity"
+            android:name=".activity.BanknameActivity"
             android:label="@string/title_activity_review" >
         </activity>
         <activity
-            android:name=".BankdetailsActivity"
+            android:name=".activity.BankdetailsActivity"
             android:label="@string/title_activity_review" >
         </activity>        
         <activity
-            android:name=".ThanksActivity"
+            android:name=".activity.ThanksActivity"
             android:label="@string/title_activity_review" >
         </activity>
         <activity
-            android:name=".UsageActivity"
+            android:name=".activity.UsageActivity"
             android:label="@string/title_activity_usage" >
         </activity>
     </application>

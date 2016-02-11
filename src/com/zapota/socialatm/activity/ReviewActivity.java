@@ -1,4 +1,4 @@
-package com.zapota.socialatm;
+package com.zapota.socialatm.activity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,6 +34,10 @@ import com.a2plab.googleplaces.GooglePlaces;
 import com.a2plab.googleplaces.models.PlaceDetails;
 import com.a2plab.googleplaces.result.PlaceDetailsResult;
 import com.a2plab.googleplaces.result.Result.StatusCode;
+import com.zapota.socialatm.R;
+import com.zapota.socialatm.R.id;
+import com.zapota.socialatm.R.layout;
+import com.zapota.socialatm.R.menu;
 
 public class ReviewActivity extends Activity {
 
@@ -61,7 +65,7 @@ public class ReviewActivity extends Activity {
 		ratingBank = (RatingBar) findViewById(R.id.ratingBank);
 		ratingAc = (RatingBar) findViewById(R.id.ratingAc);
 		
-		textView = (TextView) findViewById(R.id.textView1); 
+		textView = (TextView) findViewById(R.id.bankId); 
 		
 		Intent intent = getIntent();		
 		String placeReference = intent.getStringExtra("placeReference");						

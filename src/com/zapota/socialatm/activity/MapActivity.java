@@ -1,4 +1,4 @@
-package com.zapota.socialatm;
+package com.zapota.socialatm.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,6 +41,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
+import com.zapota.socialatm.R;
+import com.zapota.socialatm.R.id;
+import com.zapota.socialatm.R.layout;
 
 public class MapActivity extends FragmentActivity implements
 		GoogleApiClient.ConnectionCallbacks,

@@ -1,4 +1,4 @@
-package com.zapota.socialatm;
+package com.zapota.socialatm.activity;
 
 import java.util.ArrayList;
 
@@ -28,6 +28,10 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Highlight;
 import com.github.mikephil.charting.utils.PercentFormatter;
+import com.zapota.socialatm.R;
+import com.zapota.socialatm.R.id;
+import com.zapota.socialatm.R.layout;
+import com.zapota.socialatm.R.menu;
 
 public class UsageActivity extends FragmentActivity implements OnSeekBarChangeListener,
 OnChartValueSelectedListener{

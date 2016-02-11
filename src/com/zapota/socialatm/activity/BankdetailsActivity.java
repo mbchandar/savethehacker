@@ -1,4 +1,4 @@
-package com.zapota.socialatm;
+package com.zapota.socialatm.activity;
 
 import java.io.IOException;
 
@@ -21,6 +21,10 @@ import com.a2plab.googleplaces.GooglePlaces;
 import com.a2plab.googleplaces.models.PlaceDetails;
 import com.a2plab.googleplaces.result.PlaceDetailsResult;
 import com.a2plab.googleplaces.result.Result.StatusCode;
+import com.zapota.socialatm.R;
+import com.zapota.socialatm.R.id;
+import com.zapota.socialatm.R.layout;
+import com.zapota.socialatm.R.menu;
 
 public class BankdetailsActivity extends Activity {
 

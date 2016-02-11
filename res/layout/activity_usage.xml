@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.zapota.socialatm.UsageActivity" >
+    tools:context="com.zapota.socialatm.activity.UsageActivity" >
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/chart1"

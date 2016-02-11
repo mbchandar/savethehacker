@@ -1,4 +1,6 @@
-package com.zapota.socialatm;
+package com.zapota.socialatm.activity;
+
+import com.zapota.socialatm.R;
 
 import android.app.Activity;
 import android.content.Intent;
